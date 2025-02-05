@@ -103,12 +103,14 @@ async function seedRevenue() {
 
 export async function GET() {
   try {
-    const result = await sql.begin((sql) => [
+    // await sql`DROP TABLE IF EXISTS invoices, customers, revenue, users CASCADE`;
+    const result = await sql.begin(() => [
       seedUsers(),
       seedCustomers(),
       seedInvoices(),
       seedRevenue(),
     ]);
+    console.log(result)
 
     return Response.json({ message: 'Database seeded successfully' });
   } catch (error) {
